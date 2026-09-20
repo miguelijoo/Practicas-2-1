@@ -1,0 +1,21 @@
+cat <<EOT > .gitignore
+# Binarios y compilación (C, C++, Java)
+*.o
+*.out
+*.exe
+*.class
+bin/
+build/
+out/
+*.so
+*.dll
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+
+# Sistema Operativo
+Thumbs.db
+.DS_Store
+EOT
