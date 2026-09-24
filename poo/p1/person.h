@@ -5,21 +5,21 @@
 
 class Person{
     private:
-    std::string name_;
-    int birth_year_;
+    std::string name_; //variable nombre
+    int birth_year_; //variable 
 
     public:
-    Person(){
+    Person(){ //Constructor por defecto
         name_="UNKNOWN";
         birth_year_=-1;
     }
 
-    Person(std::string name, int birth_year);
+    Person(std::string name, int birth_year); //Constructor con parámetros personalizados
 
-    std::string GetName();
+    std::string GetName(); //Getters, permiten coger datos de la zona private
     int GetYear();
 
-    bool SetName(std::string name);
+    bool SetName(std::string name); //Setters, permiten meter datos en la zona private
 
     bool SetBirthYear(int birth_year);
 
