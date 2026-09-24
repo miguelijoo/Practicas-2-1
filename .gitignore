@@ -9,6 +9,7 @@ build/
 out/
 *.so
 *.dll
+demos/
 
 # IDEs y editores
 .vscode/
