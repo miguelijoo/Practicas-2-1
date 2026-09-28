@@ -26,7 +26,6 @@ class Person{
     bool SetBirthYear(int birth_year);
 
 };
-#endif
 
 //Clase que hereda de Person, Cyclist
 
@@ -65,3 +64,5 @@ class Director: public Person{
         bool Setid(std::string uci_licens_id);
         bool Setdirsince(int director_since);
 };
+
+#endif
