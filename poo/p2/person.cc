@@ -1,6 +1,8 @@
 #include "person.h"
 #include <string>
 
+//Funciones Person
+
 Person::Person(std::string name, int birth_year){
     if(name==""){
         name_="UNKNOWN";
@@ -38,6 +40,8 @@ bool Person::SetBirthYear(int birth_year){
     }
 }
 
+//Funciones Cyclist
+
 Cyclist:: Cyclist(std::string name, int birthyear, std::string team, std::string cyclist_id): Person(name, birthyear){
     if(team==""){
         team_="UNKNOWN";
@@ -74,6 +78,8 @@ bool Cyclist:: Setcyclist_id(std::string cyclist_id){
     }
 }
 
+//Funciones Director
+
 Director:: Director(std::string name, int birthyear, std::string team, std::string uci_license_id, int director_since): Person(name, birthyear){
     if(team==""){
         team_="UNKNOWN";
@@ -98,4 +104,32 @@ Director:: Director(std::string name, int birthyear, std::string team, std::stri
 std::string Director:: Getteam(){return team_;}
 std::string Director:: Getid(){return uci_license_id_;}
 int Director:: Getdirsince(){return director_since_;}
+bool Director:: Setteam(std::string team){
+    if(team==""){
+        return false;
+    }
+    else{
+        team_=team;
+        return true;
+    }
+}
 
+bool Director:: Setid(std::string uci_licens_id){
+    if(uci_licens_id==""){
+        return false;
+    }
+    else{
+        uci_license_id_=uci_licens_id;
+        return true;
+    }
+}
+
+bool Director:: Setdirsince(int director_since){
+    if(director_since<1990){
+        return false;
+    }
+    else{
+        director_since_=director_since;
+        return true;
+    }
+}
