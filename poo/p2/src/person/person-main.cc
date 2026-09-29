@@ -72,6 +72,7 @@ int main(){
     d.Setid(uci_license_id);
     std::cout<<"Director desde: ";
     std::cin>>director_since;
+    std::cin.ignore();
     d.Setdirsince(director_since);
 
     //Muestra de datos de Director

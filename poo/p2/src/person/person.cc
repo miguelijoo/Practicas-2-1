@@ -75,6 +75,7 @@ bool Cyclist:: Setcyclist_id(std::string cyclist_id){
     }
     else{
         cyclist_id_=cyclist_id;
+        return true;
     }
 }
 
