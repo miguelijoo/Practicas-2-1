@@ -21,6 +21,7 @@ int main(int argc, char **argv){
 				exit(EXIT_FAILURE);
 			case 0:
 				printf("Soy el proceso hijo %d y mi id es %d, la de mi padre es %d\n", i, getpid(), getppid());
+				sleep(10);
 				exit(EXIT_SUCCESS);
 			default:
 				break; //Aquí el padre no hace nada, simplemente ha creado a los hijos seguidos y ya, así lo tenemos todo en paralelo
