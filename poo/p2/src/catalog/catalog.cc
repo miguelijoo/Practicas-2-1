@@ -1,17 +1,38 @@
 #include "catalog.h"
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
-#include "poo/p2/src/person/person.h"
+#include "../person/person.h"
 
 
 //Funciones CyclistCatalog
 
-bool Load(){
-
-
-    return true;
+bool CyclistCatalog::Load(const std::string& path) {
+    Cyclist c;
+    std::string name, birth_s, id, team;
+    int birthyear = 0;
+    cyclists_.clear(); // Elimina todos los elementos si hubiera
+    std::ifstream in(path);
+    if (!in) {
+        std::cerr << "-ERROR: No se pudo abrir " << path << "\n";
+        return false;
+    }
+    std::string line;
+    if (!std::getline(in, line)) return false; // saltar cabecera
+    while (std::getline(in, line)) {
+        if (line.empty()) continue;
+        std::istringstream iss(line); // Define un stream de lectura a partir de line
+        if (!std::getline(iss, name, ',')) continue;
+        if (!std::getline(iss, birth_s, ',')) continue;
+        if (!std::getline(iss, id, ',')) continue;
+        if (!std::getline(iss, team)) continue;
+        birthyear = std::stoi(birth_s);
+        c.SetName(name);
+        c.SetBirthYear(birthyear);
+        c.SetCyclistId(id);
+        c.SetTeam(team);
+        cyclists_.push_back(c); // se hace una copia al final del vector
+    }
+    return !cyclists_.empty();
 }
 
 int CyclistCatalog::Size(std::vector<Cyclist> v_cyclists){ //Errores varios, como el acceder al vector de private que como tal no puedo hacerlo
