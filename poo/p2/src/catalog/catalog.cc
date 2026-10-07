@@ -49,7 +49,7 @@ int CyclistCatalog::Size(){ //Errores varios, como el acceder al vector de priva
     }
 }
 
-void CyclistCatalog:: Data(){
+void CyclistCatalog:: Data(){ //Recorrido con un bucle for normal y haciendo uso de [].
     if(cyclists_.empty()==true){
         std::cout<<"El vector está vacío, no hay datos."<<std::endl;
     }
