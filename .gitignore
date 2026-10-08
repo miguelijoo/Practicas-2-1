@@ -1,4 +1,3 @@
-cat <<EOT > .gitignore
 # Binarios y compilación (C, C++, Java)
 *.o
 *.out
@@ -20,4 +19,3 @@ Demos/
 # Sistema Operativo
 Thumbs.db
 .DS_Store
-EOT
