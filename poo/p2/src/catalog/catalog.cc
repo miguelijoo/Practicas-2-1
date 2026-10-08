@@ -108,7 +108,7 @@ bool DirectorCatalog::Load(const std::string& path) {
         if (!std::getline(iss, name, ',')) continue;
         if (!std::getline(iss, birth_s, ',')) continue;
         if (!std::getline(iss, id, ',')) continue;
-        if (!std::getline(iss, team)) continue;
+        if (!std::getline(iss, team, ',')) continue;
         if (!std::getline(iss, dirsince_)) continue;
         dirsince = std::stoi(dirsince_);
         birthyear = std::stoi(birth_s);
