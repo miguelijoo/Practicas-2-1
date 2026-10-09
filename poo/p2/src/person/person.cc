@@ -31,13 +31,8 @@ bool Person::SetName(std::string name){
 }
 
 bool Person::SetBirthYear(int birth_year){
-    if(birth_year<1990){
-        return false;
-    }
-    else{
-        birth_year_=birth_year;
-        return true;
-    }
+    birth_year_=birth_year;
+    return true;
 }
 
 //Funciones Cyclist
