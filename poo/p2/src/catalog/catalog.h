@@ -10,8 +10,8 @@ class CyclistCatalog{
         std::vector<Cyclist>cyclists_;
     public:
         bool Load(const std::string& path);
-        int Size();
-        void Data();
+        const int Size(){return cyclists_.size();}
+        const std::vector<Cyclist> Data(){return cyclists_;}
         void Remove(std::string id);
 };
 
@@ -20,8 +20,8 @@ class DirectorCatalog{
         std::vector<Director>directors_;
     public:
         bool Load(const std::string& path);
-        int Size();
-        void Data();
+        const int Size(){return directors_.size();}
+        const std::vector <Director> Data(){return directors_;}
         void Remove(std::string id);
 };
 

@@ -38,38 +38,6 @@ bool CyclistCatalog::Load(const std::string& path) {
     return !cyclists_.empty();
 }
 
-int CyclistCatalog::Size(){ //Errores varios, como el acceder al vector de private que como tal no puedo hacerlo
-    if(cyclists_.empty()==true){
-        return -1;
-    }
-    else{
-        int n;
-        n=cyclists_.size();
-        return n;
-    }
-}
-
-void CyclistCatalog:: Data(){ //Recorrido con un bucle for normal y haciendo uso de [].
-    if(cyclists_.empty()==true){
-        std::cout<<"El vector está vacío, no hay datos."<<std::endl;
-    }
-    else{
-        std::string name, team, id;
-        int birthyear;
-        for(int i=0;i<cyclists_.size();i++){
-            name=cyclists_[i].GetName();
-            team=cyclists_[i].Getteam();
-            birthyear=cyclists_[i].GetYear();
-            id=cyclists_[i].Getcyclist_id();
-            std::cout<<"Ciclista numero: "<<i<<std::endl;
-            std::cout<<"Nombre: "<<name<<std::endl;
-            std::cout<<"Año nacimiento: "<<birthyear<<std::endl;
-            std::cout<<"Equipo: "<<team<<std::endl;
-            std::cout<<"Id: "<<id<<std::endl;
-        }
-    }
-}
-
 void CyclistCatalog:: Remove(std::string id){
     if(cyclists_.empty()==true){
         std::cout<<"El vector está vacío, no hay datos para borrar."<<std::endl;
@@ -120,41 +88,6 @@ bool DirectorCatalog::Load(const std::string& path) {
         directors_.push_back(d); // se hace una copia al final del vector
     }
     return !directors_.empty();
-}
-
-int DirectorCatalog::Size(){ //Errores varios, como el acceder al vector de private que como tal no puedo hacerlo
-    if(directors_.empty()==true){
-        return -1;
-    }
-    else{
-        int n;
-        n=directors_.size();
-        return n;
-    }
-}
-
-void DirectorCatalog:: Data(){ //Recorrido con un range for con referencia
-    if(directors_.empty()==true){
-        std::cout<<"El vector está vacío, no hay datos."<<std::endl;
-    }
-    else{
-        std::string name, team, id;
-        int birthyear, dirsince, i=1;
-        for(Director &d: directors_){
-            name=d.GetName();
-            birthyear=d.GetYear();
-            team=d.Getteam();
-            id=d.Getid();
-            dirsince=d.Getdirsince();
-            std::cout<<"Director numero "<<i<<std::endl;
-            i++;
-            std::cout<<"Nombre: "<<name<<std::endl;
-            std::cout<<"Año nacimiento: "<<birthyear<<std::endl;
-            std::cout<<"Equipo: "<<team<<std::endl;
-            std::cout<<"Id: "<<id<<std::endl;
-            std::cout<<"Director desde: "<<dirsince<<std::endl;
-        }
-    }
 }
 
 void DirectorCatalog:: Remove(std::string id){
