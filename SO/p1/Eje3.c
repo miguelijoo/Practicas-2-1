@@ -17,7 +17,7 @@ int main(int argc, char **argv){
 		printf("No hay procesos a crear, saliendo del programa.\n");
 		exit(EXIT_FAILURE);
 	}
-	for(int i=0; i<n;i++){
+	for(int i=0; i<n; i++){
 		val=fork();
 		switch(val){
 			case -1:
