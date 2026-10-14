@@ -1,1 +1,0 @@
-INSERT INTO votantes VALUES (30653845, 'Margia Gonzalez Ramirez', 'Doctorado', 'Activo', 'goram@telefonica.es', 1, '21/8/1989', 677544822);

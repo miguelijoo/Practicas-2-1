@@ -1,1 +1,0 @@
-DELETE FROM votantes WHERE dni=30653845;

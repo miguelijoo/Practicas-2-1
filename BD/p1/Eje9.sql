@@ -1,1 +1,0 @@
-SELECT NOMBRE, TIPO, FECHA FROM eventos;

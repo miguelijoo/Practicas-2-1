@@ -1,1 +1,0 @@
-SELECT NOMBRE || ' de tipo ' || TIPO "Convocatoria" FROM eventos;
