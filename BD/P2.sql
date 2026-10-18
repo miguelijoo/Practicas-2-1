@@ -47,5 +47,3 @@ HAVING COUNT(*)>10;
 SELECT pa.nombrecompleto, COUNT(*) FROM partidos pa, consultas_datos cd
 WHERE pa.idpartido = cd.partido AND cd.respuesta='Si' AND cd.certidumbre>0.8
 GROUP BY pa.nombrecompleto;
-
-SELECT * FROM consultas_datos;
