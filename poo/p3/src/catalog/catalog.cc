@@ -31,48 +31,157 @@ bool CyclistCatalog::Load(const std::string& path) {
         birthyear = std::stoi(birth_s);
         c.SetName(name);
         c.SetBirthYear(birthyear);
-        c.Setcyclist_id(id);
-        c.Setteam(team);
+        c.SetCyclistId(id);
+        c.SetTeam(team);
         cyclists_.push_back(c); // se hace una copia al final del vector
     }
     return !cyclists_.empty();
 }
 
-void CyclistCatalog:: Remove(std::string id){
+bool CyclistCatalog:: Remove(std::string id){
     if(cyclists_.empty()==true){
         std::cout<<"El vector está vacío, no hay datos para borrar."<<std::endl;
+        return false;
     }
     else{
+        bool test=false;
         std::string idcopia;
         for(auto it = cyclists_.begin(); it != cyclists_.end();){
-            idcopia=it->Getcyclist_id();
+            idcopia=it->GetCyclistId();
             if(idcopia==id){
                 it=cyclists_.erase(it);
+                test=true;
             }
             else{
                 it++;
             }
         }
+        return test;
     }
 }
 
 std::string CyclistCatalog::GetTeam(std::string id){
     for(auto &it: cyclists_){
-        if(id==it.Getcyclist_id()){
-            return it.Getteam();
+        if(id==it.GetCyclistId()){
+            return it.GetTeam();
         }
     }
     return "NOT_IN_CATALOG";
 }
 
 std::vector <Cyclist> CyclistCatalog::GetByTeam(std::string team){
-    std::vector <Cyclist> Catalog_;
+    std::vector<Cyclist>teamcyclists;
     for(auto &it: cyclists_){
-        if(team==it.Getteam()){
-
+        if(team==it.GetTeam()){
+            teamcyclists.push_back(it);
         }
     }
-    return Catalog_;
+    return teamcyclists;
+}
+
+std::vector <Cyclist> CyclistCatalog:: GetYoungest(){
+    if(cyclists_.empty() == true){
+        return cyclists_;
+    }
+    else{
+        std::vector<Cyclist> Jovenes;
+        int i=cyclists_[0].GetBirthYear();
+        for(auto &it: cyclists_){
+            if(i<it.GetBirthYear()){
+                i=it.GetBirthYear();
+            }
+        }
+        for(auto &it: cyclists_){
+            if(it.GetBirthYear()==i){
+                Jovenes.push_back(it);
+            }
+        }
+        return Jovenes;
+    }
+}
+
+void CyclistCatalog::Clear(){
+    cyclists_.clear();
+}
+
+void CyclistCatalog:: AddFirst(Cyclist c_){
+    cyclists_.insert(cyclists_.begin(), c_);
+}
+
+void CyclistCatalog:: AddLast(Cyclist c_){
+    cyclists_.insert(cyclists_.end(), c_);
+}
+
+bool CyclistCatalog:: RemoveFirst(){
+    if(cyclists_.empty()==true){
+        return false;
+    }
+    else{
+        cyclists_.erase(cyclists_.begin());
+        return true;
+    }
+}
+
+bool CyclistCatalog:: RemoveLast(){
+    if(cyclists_.empty()==true){
+        return false;
+    }
+    else{
+        cyclists_.pop_back();
+        return true;
+    }
+}
+
+bool CyclistCatalog:: RemoveAt(int pos){
+    if(pos>=cyclists_.size()){
+        return false;
+    }
+    else if(pos<0){
+        return false;
+    }
+    else{
+        std::vector<Cyclist>::iterator it = cyclists_.begin()+pos;
+        cyclists_.erase(it);
+        return true;
+    }
+}
+
+int CyclistCatalog:: RemoveByTeam(const std::string &team){
+    // int i=0, cont=0;
+    // std::vector<Cyclist>::iterator it_ = cyclists_.begin();
+    // for(auto &it: cyclists_){
+    //     if(it.GetTeam()==team){
+    //         cyclists_.erase(it_);
+    //         it_=std::next(cyclists_.begin(), i);
+    //         cont++;
+    //     }
+    //     i++;
+    // }
+    // return cont;
+    int counter = 0; 
+
+    for (auto it = cyclists_.begin(); it != cyclists_.end();) { //Revisar bucle
+        if (it->GetTeam() == team){
+            it = cyclists_.erase(it);
+            counter++;
+        }
+        else 
+            ++it;
+    }
+
+    return counter;
+}
+
+bool CyclistCatalog:: RemoveRange(std::size_t first, std::size_t last){
+    if(first<=last && last<=cyclists_.size()){ 
+        std::vector<Cyclist>::iterator it=cyclists_.begin()+first, it2=cyclists_.begin()+last;
+        cyclists_.erase(it, it2);
+        return true;
+    }
+    else{
+        std::cout<<"Rango no válido."<<std::endl;
+        return false;
+    }
 }
 
 //Funciones DirectorCatalog
@@ -101,28 +210,32 @@ bool DirectorCatalog::Load(const std::string& path) {
         birthyear = std::stoi(birth_s);
         d.SetName(name);
         d.SetBirthYear(birthyear);
-        d.Setid(id);
-        d.Setteam(team);
-        d.Setdirsince(dirsince);
+        d.SetUciLicenseId(id);
+        d.SetTeam(team);
+        d.SetDirectorSince(dirsince);
         directors_.push_back(d); // se hace una copia al final del vector
     }
     return !directors_.empty();
 }
 
-void DirectorCatalog:: Remove(std::string id){
+bool DirectorCatalog:: Remove(std::string id){
     if(directors_.empty()==true){
         std::cout<<"El vector está vacío, no hay datos para borrar."<<std::endl;
+        return false;
     }
     else{
         std::string idcopia;
+        bool confirm=false;
         for(auto it = directors_.begin(); it != directors_.end();){
-            idcopia=it->Getid();
+            idcopia=it->GetUciLicenseId();
             if(idcopia==id){
                 it=directors_.erase(it);
+                confirm=true;
             }
             else{
                 it++;
             }
         }
+        return confirm;
     }
 }

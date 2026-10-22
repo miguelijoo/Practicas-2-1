@@ -18,8 +18,6 @@ Person::Person(std::string name, int birth_year){
     }
 }
 
-std::string Person::GetName(){return name_;}
-int Person::GetYear(){return birth_year_;}
 bool Person::SetName(std::string name){
     if(name==""){
         return false;
@@ -52,10 +50,10 @@ Cyclist:: Cyclist(std::string name, int birthyear, std::string team, std::string
     }
 }
 
-std::string Cyclist:: Getteam(){return team_;}
-std::string Cyclist:: Getcyclist_id(){return cyclist_id_;}
+std::string Cyclist::GetTeam()const{return team_;}
+std::string Cyclist::GetCyclistId()const{return cyclist_id_;}
 
-bool Cyclist:: Setteam(std::string team){
+bool Cyclist:: SetTeam(std::string team){
     if(team==""){
         return false;
     }
@@ -64,7 +62,7 @@ bool Cyclist:: Setteam(std::string team){
         return true;
     }
 }
-bool Cyclist:: Setcyclist_id(std::string cyclist_id){
+bool Cyclist:: SetCyclistId(std::string cyclist_id){
     if(cyclist_id==""){
         return false;
     }
@@ -97,10 +95,10 @@ Director:: Director(std::string name, int birthyear, std::string team, std::stri
     }
 }
 
-std::string Director:: Getteam(){return team_;}
-std::string Director:: Getid(){return uci_license_id_;}
-int Director:: Getdirsince(){return director_since_;}
-bool Director:: Setteam(std::string team){
+std::string Director:: GetTeam()const{return team_;}
+std::string Director:: GetUciLicenseId()const{return uci_license_id_;}
+int Director:: GetDirectorSince()const{return director_since_;}
+bool Director:: SetTeam(std::string team){
     if(team==""){
         return false;
     }
@@ -110,7 +108,7 @@ bool Director:: Setteam(std::string team){
     }
 }
 
-bool Director:: Setid(std::string uci_licens_id){
+bool Director:: SetUciLicenseId(std::string uci_licens_id){
     if(uci_licens_id==""){
         return false;
     }
@@ -120,7 +118,7 @@ bool Director:: Setid(std::string uci_licens_id){
     }
 }
 
-bool Director:: Setdirsince(int director_since){
+bool Director:: SetDirectorSince(int director_since){
     if(director_since<1990){
         return false;
     }

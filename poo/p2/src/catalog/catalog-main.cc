@@ -9,9 +9,9 @@ int main(){
     int birthyear, dirsince;
     std::vector <Cyclist> cyclists;
     std::vector <Director> directors;
-    path="";
+    path="/home/miguelijo/Escritorio/UCO/Practicas-2-1/poo/p2/data/cyclists.csv";
     c.Load(path);
-    path="";
+    path="/home/miguelijo/Escritorio/UCO/Practicas-2-1/poo/p2/data/directors.csv";
     d.Load(path);
     //Funciones para comprobar CyclistCatalog
     int n=c.Size();

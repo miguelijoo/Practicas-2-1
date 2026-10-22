@@ -24,7 +24,7 @@ int main(){
     std::cout<<"Nombre de Person: ";
     std::cout<<p.GetName()<<std::endl;
     std::cout<<"Fecha de nacimiento de Person: ";
-    std::cout<<p.GetYear()<<std::endl;
+    std::cout<<p.GetBirthYear()<<std::endl;
 
     //Recogida de datos de Cyclist
     
@@ -38,21 +38,21 @@ int main(){
     c.SetBirthYear(birthyear);
     std::cout<<"Equipo: ";
     std::getline(std::cin, team);
-    c.Setteam(team);
+    c.SetTeam(team);
     std::cout<<"Id: ";
     std::getline(std::cin, cyclist_id);
-    c.Setcyclist_id(cyclist_id);
+    c.SetCyclistId(cyclist_id);
 
     //Muestra de datos de Cyclist
 
     std::cout<<"Nombre de Cyclist: ";
     std::cout<<c.GetName()<<std::endl;
     std::cout<<"Fecha de nacimiento de Cyclist: ";
-    std::cout<<c.GetYear()<<std::endl;
+    std::cout<<c.GetBirthYear()<<std::endl;
     std::cout<<"Team de Cyclist: ";
-    std::cout<<c.Getteam()<<std::endl;
+    std::cout<<c.GetTeam()<<std::endl;
     std::cout<<"Id de Cyclist: ";
-    std::cout<<c.Getcyclist_id()<<std::endl;
+    std::cout<<c.GetCyclistId()<<std::endl;
 
     //Recogida de datos de Director
 
@@ -66,26 +66,26 @@ int main(){
     d.SetBirthYear(birthyear);
     std::cout<<"Equipo: ";
     std::getline(std::cin, team);
-    d.Setteam(team);
+    d.SetTeam(team);
     std::cout<<"Id: ";
     std::getline(std::cin, uci_license_id);
-    d.Setid(uci_license_id);
+    d.SetUciLicenseId(uci_license_id);
     std::cout<<"Director desde: ";
     std::cin>>director_since;
     std::cin.ignore();
-    d.Setdirsince(director_since);
+    d.SetDirectorSince(director_since);
 
     //Muestra de datos de Director
 
     std::cout<<"Nombre de Director: ";
     std::cout<<d.GetName()<<std::endl;
     std::cout<<"Fecha de nacimiento de Director: ";
-    std::cout<<d.GetYear()<<std::endl;
+    std::cout<<d.GetBirthYear()<<std::endl;
     std::cout<<"Team de Director: ";
-    std::cout<<d.Getteam()<<std::endl;
+    std::cout<<d.GetTeam()<<std::endl;
     std::cout<<"Id de Director: ";
-    std::cout<<d.Getid()<<std::endl;
+    std::cout<<d.GetUciLicenseId()<<std::endl;
     std::cout<<"Director since: ";
-    std::cout<<d.Getdirsince()<<std::endl;
+    std::cout<<d.GetDirectorSince()<<std::endl;
     exit(EXIT_SUCCESS);
 }

@@ -1,4 +1,3 @@
-add_definitions(-DPROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 add_library(catalog catalog.cc catalog.h)
 target_link_libraries(catalog person)
 target_include_directories(catalog PUBLIC ${CMAKE_CURRENT_LIST_DIR})
