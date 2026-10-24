@@ -8,7 +8,7 @@ Person::Person(std::string name, int birth_year){
         else{
             name_=name;
         }
-        if(birth_year<1990){
+        if(birth_year<1900){
             birth_year_=-1;
         }
         else{
