@@ -1,0 +1,19 @@
+0000	0002
+0001	0003
+0002	0002
+0003	0002
+# Temporal
+0004	0000
+@
+0005
+@
+# Flujo principal
+# Subrutina
+SB1: HALT
+CRA
+ADDI 	0000
+CTA
+ADDI	0001
+STA		0004
+
+JUMPI SB1 
