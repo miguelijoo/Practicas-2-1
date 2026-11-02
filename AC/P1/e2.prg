@@ -1,25 +1,25 @@
-0 2
-1 3
-2 2
-3 3
+E 10
+F 11
+10 2
+11 3
 #Temporal
-4 0
+12 0
 @
-5
+0
 @
 #Principal
 CRA
-CSR 8
+CSR 3
 HALT
 #Subrutina
 HALT
-ADDI 0
-CTA
-ADDI 1
-ITA
-STA 4
 CRA
-ISZ 4
-JMPI 8
+ADDI E
+CTA
+ADDI F
+STA 12
+CRA
+ISZ 12
+JMPI 3
 ITA
-JMPI 8
+JMPI 3
