@@ -28,12 +28,12 @@ int main(){
 	pthread_t v_hebras[n];
 	for(int i=0;i<n;i++){
 		if(pthread_create(&v_hebras[i], NULL, (void *) sumaral, (void *) al)){
-			fprintf(stderr,"Error creating thread. Errno value: %d meaning: %s.\n", errno, strerror(errno));
+			fprintf(stderr,"Error creando al hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 		printf("Esperando a la hebra %d.\n", i);
 		if(pthread_join(v_hebras[i], NULL)){
-			fprintf(stderr, "Error waiting thread. Errno value: %d meaning: %s.\n", errno, strerror(errno));
+			fprintf(stderr, "Error esperando al hilo.\n");
 		}
 		suma=suma+al[1];
 		printf("Suma hebra principal parcial: %d.\n", suma);

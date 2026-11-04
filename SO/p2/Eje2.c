@@ -3,7 +3,17 @@
 #include <stdlib.h>
 
 void * leerlineas(void *pfich){
-	FILE 
+	FILE *fich = (FILE *) pfich;
+	int *n=(int *) malloc(sizeof(int));
+	if(n==NULL){
+		printf("Error al crear el puntero del elemento que cuenta líneas.\n");
+		exit(EXIT_FAILURE);
+	}
+	char cad[100];
+	while(fgets(cad, 100, fich)!=NULL){
+		(*n)++;
+	}
+	pthread_exit((void *) n);
 }
 
 int main(int argc, char **argv){
@@ -15,6 +25,19 @@ int main(int argc, char **argv){
 	FILE *fich;
 	for(int i=1;i<=argc;i++){
 		fich=fopen(argv[i], "r");
-		pthread_create(&idth[i-1], NULL, (void *) leerlineas, (void *) fich);
+		if(pthread_create(&(vth[i-1]), NULL, (void *) leerlineas, (void *) fich)){
+			fprintf(stderr, "Error al crear la hebra.\n");
+			exit(EXIT_FAILURE);
+		};
 	}
+	int *num;
+	for(int i=0;i<argc;i++){
+		if(pthread_join(vth[i],(void**) &num)){
+			fprintf(stderr, "Error esperando a los hilos.\n");
+			exit(EXIT_FAILURE);
+		}
+		printf("Fichero %d, total de líneas: %d.\n", i, *num);
+	}
+	printf("Hilo principal, no hay más hilos a esperar.\n");
+	exit(EXIT_SUCCESS);
 }
