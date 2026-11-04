@@ -1,6 +1,6 @@
 --Eje 1
 SELECT v.nombrecompleto FROM votantes v
-WHERE SUBSTR(v.dni, -1)=v.localidad + 1;
+WHERE SUBSTR(v.dni, -1)=v.localidad + 1; --En substr, selecciono DNI y con el -1 le digo que coja el último caracter. Luego con localidad+1 cojo el valor de localidad 1. DNI=4983 localidad=2 --> Coge el 3 y en localidad hace 2+1=3
 --Eje 2
 SELECT v.nombrecompleto, DECODE(l.idlocalidad,
 1, 'Madrid',
@@ -51,6 +51,20 @@ HAVING COUNT(*)>(
                                                         GROUP BY c.votante
                                                     )
                 );
+--Eje 8
+SELECT v.dni, COUNT(*) FROM votantes v, consultas c
+WHERE v.dni=c.votante AND (v.fechanacimiento = (
+                                                    SELECT MIN(fechanacimiento) FROM votantes --4. Aseguramos que se cuente al más mayor igualmente
+                                                )
+                            OR v.fechanacimiento>( --3. Imponemos que sea una fecha más grande que la segunda más antigua, es decir, los más jóvenes después del segundo
+                                                    SELECT MIN(fechanacimiento) FROM votantes --2. Segunda fecha más antigua
+                                                    WHERE fechanacimiento>(
+                                                                                SELECT MIN(fechanacimiento) FROM votantes --1. Fecha más antigua
+                                                    )
+                                                )
+                            )
+GROUP BY v.dni
+ORDER BY COUNT(*) DESC;
 
 SELECT * FROM votantes;
 SELECT * FROM localidades;
