@@ -1,22 +1,28 @@
-12	0
 13	0
+14	0
+#Número test
+15	FFFC
 @
 0
 @
 CSR 	3
-CSR 	8
+CSR 	A
 HALT
 #Subrutina 1
 HALT
+CRA
+ADD 15
 CTA
 ITA
-STA 	12
+STA 	13
 JMPI 	3
 #Subrutina 2
 HALT
+CRA
+ADD 15
 ROR_F_ACC
 CRA
 SFZ
 ITA
-STA 	13
-JMPI 	8
+STA 	14
+JMPI 	A
