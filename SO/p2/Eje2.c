@@ -23,9 +23,9 @@ int main(int argc, char **argv){
 	}
 	pthread_t vth[argc-1];
 	FILE *fich;
-	for(int i=1;i<=argc;i++){
-		fich=fopen(argv[i], "r");
-		if(pthread_create(&(vth[i-1]), NULL, (void *) leerlineas, (void *) fich)){
+	for(int i=0;i<argc;i++){
+		fich=fopen(argv[i+1], "r");
+		if(pthread_create(&(vth[i]), NULL, (void *) leerlineas, (void *) fich)){
 			fprintf(stderr, "Error al crear la hebra.\n");
 			exit(EXIT_FAILURE);
 		};
