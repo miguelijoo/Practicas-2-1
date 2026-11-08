@@ -31,7 +31,40 @@ SELECT v.nombrecompleto, v.localidad, DECODE(( --En este decode lo que hacemos e
 FROM votantes v
 WHERE v.localidad IN (2,4,8)
 ORDER BY mayoriaedad DESC;
+--Eje 5
+SELECT l.nombre, l.numerohabitantes, p.comunidad FROM localidades l, provincias p
+WHERE l.provincia=p.idprovincia AND p.idprovincia IN(1,2,3) AND l.numerohabitantes>ANY(
+                                                                                        SELECT numerohabitantes FROM localidades
+                                                                                        WHERE provincia=4
+                                                                                        );
+--Eje 6
+SELECT v.nombrecompleto, COUNT(*) FROM votantes v, consultas c
+WHERE v.dni=c.votante AND v.situacionlaboral='Activo'
+GROUP BY v.nombrecompleto
+HAVING COUNT(*)<(
+                    SELECT AVG(r.participaciones) FROM (
+                                            SELECT COUNT(*) AS participaciones FROM consultas c1
+                                            GROUP BY c1.votante
+                                        ) r
+);
+--Eje7
+SELECT l.nombre FROM localidades l, votantes v
+WHERE v.localidad=l.idlocalidad --Faltan localidades puesto que si no hay votantes con un v.localidad que coincida con algún l.idlocalidad no aparecerá. Si l.idlocalidad vale 10, aparecerá si hay al menos un votante con v.localidad=10 de modo que 10=10
+GROUP BY l.nombre
+ORDER BY AVG(
+                DECODE(v.estudiossuperiores, --DECODE devuelve una columna entera de números que tiene el valor numérico de todos los votantes según sus estudios. AVG puede usar dicha columna de números
+                        'Ninguno', 0,
+                        'Basicos', 1,
+                        'Superiores', 2,
+                        'Doctorado', 3
+                    )
+            )DESC;
+--Eje 8
 
 SELECT * FROM votantes;
 SELECT * FROM localidades;
 SELECT * FROM provincias;
+SELECT * FROM consultas;
+SELECT * FROM consultas_datos;
+SELECT * FROM eventos;
+SELECT * FROM eventos_resultados;
