@@ -60,6 +60,51 @@ ORDER BY AVG(
                     )
             )DESC;
 --Eje 8
+SELECT l.nombre as localidad, l.idlocalidad, p.nombre as provincia, p.idprovincia, avg(decode(
+    v.estudiossuperiores, 
+    'Ninguno', 0, 
+    'Basicos', 1, 
+    'Superiores', 2, 
+    'Doctorado', 3)) as ordenloc
+FROM votantes v, localidades l, provincias p
+WHERE v.localidad=l.idlocalidad and l.provincia = p.idprovincia
+GROUP BY l.nombre, l.idlocalidad, p.nombre, p.idprovincia
+HAVING AVG(DECODE(v.estudiossuperiores, 
+                    'Ninguno', 0,
+                    'Basicos', 1,
+                    'Superiores', 2,
+                    'Doctorado', 3))>=ALL(
+                                            SELECT AVG(DECODE(
+                                                                v1.estudiossuperiores,
+                                                                'Ninguno', 0,
+                                                                'Basicos',1,
+                                                                'Superiores', 2,
+                                                                'Doctorado', 3
+                                                            )) FROM votantes v1, localidades l1, provincias p1
+                                                               WHERE v1.localidad=l1.idlocalidad AND l1.provincia=p1.idprovincia
+                                                               GROUP BY p1.idprovincia
+                    );
+
+-- Solución inicial
+SELECT l.nombre
+FROM votantes v, localidades l
+WHERE v.localidad=l.idlocalidad
+GROUP BY l.nombre
+HAVING AVG(DECODE(v.estudiossuperiores, 
+                    'Ninguno', 0,
+                    'Basicos', 1,
+                    'Superiores', 2,
+                    'Doctorado', 3))>=ALL(
+                                            SELECT AVG(DECODE(
+                                                                v1.estudiossuperiores,
+                                                                'Ninguno', 0,
+                                                                'Basicos',1,
+                                                                'Superiores', 2,
+                                                                'Doctorado', 3
+                                                            )) FROM votantes v1, localidades l1, provincias p1
+                                                               WHERE v1.localidad=l1.idlocalidad AND l1.provincia=p1.idprovincia
+                                                               GROUP BY p1.idprovincia
+                    );
 
 SELECT * FROM votantes;
 SELECT * FROM localidades;
