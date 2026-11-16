@@ -65,3 +65,107 @@ begin
     dbms_output.put_line('El señor ' || v_nombre || ' con dni ' || v_dni || ' es el votante más longevo.');
 end;
 /
+--Eje 6
+clear screen;
+set serveroutput on;
+declare
+    v_nombreviejo votantes.nombrecompleto%type;
+    v_correoviejo votantes.email%type; --Con una variable de cada tipo da de sobra para hacerlo
+    v_nombrejoven votantes.nombrecompleto%type;
+    v_correojoven votantes.email%type;
+begin
+    SELECT nombrecompleto, email
+    INTO v_nombreviejo, v_correoviejo
+    FROM votantes
+    WHERE fechanacimiento <= (SELECT MIN(fechanacimiento) FROM votantes);
+    dbms_output.put_line(v_nombreviejo || ' -- Email: ' || SUBSTR(v_correoviejo, 1, INSTR(v_correoviejo, '@')) || 'uco.es');
+    
+    SELECT nombrecompleto, email
+    INTO v_nombrejoven, v_correojoven
+    FROM votantes
+    WHERE fechanacimiento >= (SELECT MAX(fechanacimiento) FROM votantes);
+    dbms_output.put_line(v_nombrejoven || ' -- Email: ' || SUBSTR(v_correojoven, 1, INSTR(v_correojoven, '@')) || 'uco.es');
+
+end;
+/
+--Eje 7
+clear screen;
+set serveroutput on;
+declare
+    v_ap1 votantes.nombrecompleto%type;
+    v_ap2 votantes.nombrecompleto%type;
+begin
+    SELECT SUBSTR(nombrecompleto, INSTR(nombrecompleto, ' ')+1)
+    INTO v_ap1
+    FROM votantes
+    WHERE fechanacimiento = (SELECT MAX(fechanacimiento) FROM votantes);
+    
+    SELECT SUBSTR(nombrecompleto, INSTR(nombrecompleto, ' ')+1)
+    INTO v_ap2
+    FROM votantes
+    WHERE fechanacimiento=(SELECT MAX(fechanacimiento) FROM votantes
+                            WHERE fechanacimiento<(SELECT MAX(fechanacimiento) FROM votantes));
+    dbms_output.put_line('El hijo se llama Juan ' || SUBSTR(v_ap2, 1, INSTR(v_ap2, ' ')) || SUBSTR (v_ap1, 1, INSTR(v_ap1, ' ')-1));
+end;
+/
+--Eje 8
+clear screen;
+set serveroutput on;
+declare
+    l_suma1 localidades.numerohabitantes%type;
+    l_suma2 localidades.numerohabitantes%type;
+    l_idmenor localidades.idlocalidad%type;
+    l_idmenor2 localidades.idlocalidad%type;
+    l_recuento number;
+begin
+    SELECT MIN(idlocalidad)
+    INTO l_idmenor
+    FROM localidades;
+    
+    SELECT MIN(idlocalidad)
+    INTO l_idmenor2
+    FROM localidades
+    WHERE idlocalidad>l_idmenor;
+    
+    SELECT numerohabitantes
+    INTO l_suma1
+    FROM localidades
+    WHERE idlocalidad=l_idmenor;
+    
+    SELECT numerohabitantes
+    INTO l_suma2
+    FROM localidades
+    WHERE idlocalidad=l_idmenor2;
+    l_suma1:=l_suma1+l_suma2;
+    
+    SELECT COUNT(*)
+    INTO l_recuento
+    FROM localidades
+    WHERE numerohabitantes>l_suma1;
+    
+    dbms_output.put_line('Hay ' || l_recuento || ' ciudades con más de ' || l_suma1 || ' habitantes, que es la suma de las dos localidades con IDs más pequeños.');
+end;
+/
+--Eje 9
+clear screen;
+set serveroutput on;
+declare
+    v_apellidos votantes.nombrecompleto%type;
+    v_dominio votantes.email%type;
+begin
+    SELECT nombrecompleto, email
+    INTO v_apellidos, v_dominio
+    FROM votantes
+    WHERE dni=30983712;
+    dbms_output.put_line('Apellidos: ' || SUBSTR(v_apellidos, INSTR(v_apellidos, ' ')+1) || ' - ' || 'Dominio: ' || SUBSTR(v_dominio, INSTR(v_dominio, '@')+1));
+end;
+/
+--Eje 10
+clear screen;
+set serveroutput on;
+declare
+    
+begin
+
+end;
+/
