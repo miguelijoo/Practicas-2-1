@@ -157,6 +157,7 @@ begin
     INTO v_apellidos, v_dominio
     FROM votantes
     WHERE dni=30983712;
+    
     dbms_output.put_line('Apellidos: ' || SUBSTR(v_apellidos, INSTR(v_apellidos, ' ')+1) || ' - ' || 'Dominio: ' || SUBSTR(v_dominio, INSTR(v_dominio, '@')+1));
 end;
 /
@@ -164,8 +165,27 @@ end;
 clear screen;
 set serveroutput on;
 declare
-    
+    l_max localidades.numerohabitantes%type;
+    l_min localidades.numerohabitantes%type;
+    l_diferencia number;
+    l_recuento number;
+    l_media number;
 begin
-
+    SELECT MAX(numerohabitantes), MIN(numerohabitantes)
+    INTO l_max, l_min
+    FROM localidades;
+    l_diferencia := l_max-l_min;
+    
+    SELECT AVG(numerohabitantes)
+    INTO l_media
+    FROM localidades;
+    
+    SELECT COUNT(*)
+    INTO l_recuento
+    FROM localidades
+    WHERE numerohabitantes > l_media;
+    
+    dbms_output.put_line('La diferencia de habitantes entre la localidad más y menos poblada es de ' || l_diferencia || ' habitantes, y ' || l_recuento ||' localidades superan la media de ' || l_media || ' habitantes.');
+    
 end;
 /
