@@ -61,8 +61,22 @@ end;
 clear screen;
 set serveroutput on;
 declare
-
+    v_recuento NUMBER :=0;
+    CURSOR cur_vot IS SELECT nombrecompleto, localidad, nombre FROM votantes, localidades WHERE localidad=idlocalidad;
 begin
-
+    FOR fila IN cur_vot LOOP
+        CASE
+            WHEN fila.localidad = 1 OR fila.localidad=2 OR fila.localidad=3 THEN fila.nombre := 'Madrid';
+            ELSE NULL;
+        END CASE;
+        dbms_output.put_line(fila.nombrecompleto || ' vive en ' || fila.nombre);
+        IF fila.nombre = 'Madrid' THEN v_recuento := v_recuento+1;
+        END IF;
+    END LOOP;
+    dbms_output.put_line('Hay ' || v_recuento || ' votantes viviendo en Madrid.');
 end;
 /
+
+--Eje 3
+clear screen;
+set serveroutput on;
