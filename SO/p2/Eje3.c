@@ -74,7 +74,7 @@ int main(int argc, char **argv){
 			exit(EXIT_FAILURE);
 		}
 		sumatotal+=*sumap;
-	}
+	}a
 //NOTA: si no hago la recogida de hilos, necesitaría semáforos para evitar la concurrencia y no perder el paralelismo de hilos del todo.
 	printf("Hilo principal ejecutando, el resultado final de la suma de elementos es: %d.\n", sumatotal);
 	exit(EXIT_SUCCESS);
