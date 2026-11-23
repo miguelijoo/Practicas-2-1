@@ -1,0 +1,12 @@
+$
+PC+1->PC:t1
+PC->MAR:t0
+GPR(AD)->MAR:t3·q1
+GPR(OP)->OPR:t2
+M->GPR:t4·q1 + t1
+0->ACC:t4·q1
+GPR+ACC->ACC:t5·q1
+$
+SR+1->SR:t0 + t1 + t2 + t3·q1 + t4·q1
+LOAD SR:t5·q1-0
+$

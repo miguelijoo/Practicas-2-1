@@ -1,0 +1,8 @@
+0 800
+@
+1
+@
+CRA
+ADD 0
+SUBV11 7FF
+HALT

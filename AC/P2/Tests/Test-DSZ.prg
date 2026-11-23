@@ -1,0 +1,15 @@
+0 1
+1 2
+2 12
+3 0
+4 0
+@
+5
+@
+CRA
+ADD 2
+DSZ 0
+STA 3
+DSZ 1
+STA 4
+HALT

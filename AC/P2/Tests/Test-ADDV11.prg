@@ -1,0 +1,8 @@
+0 13
+@
+1
+@
+CRA
+ADD 0
+ADDV11 7FF
+HALT
