@@ -11,11 +11,30 @@ struct datos_tienda{
 };
 
 void *compras(void *arg1){
-
+	struct datos_tienda *daux=(struct datos_tienda*) arg1;
+	srand(time(NULL));
+	pthread_mutex_lock(&mtx);
+	int ncompras, nelem;
+	ncompras=1+(rand()%10); //Número del 1 al 10 de camisetas a comprar
+	nelem=rand()%(daux->num_modelos); //Número de 0 al tamaño del vector de modelos de camisetas
+	if(ncompras>=daux->stock[nelem]){ //Si compramos más camisetas de las disponibles se pondrá a 0 el contador de ese modelo de camiseta y se mostrarán todas las compradas
+		printf("Soy el cliente %d y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		daux->stock[nelem]=0;
+	}
+	else{
+		printf("Soy el cliente %d y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		daux->stock[nelem]-=ncompras;
+	}
+	pthread_mutex_unlock(&mtx);
+	pthread_exit(NULL);
 }
 
 void *repuesta(void *arg2){
-
+	struct datos_tienda *daux2=(struct datos_tienda *) arg2;
+	srand(time(NULL));
+	pthread_mutex_lock(&mtx);
+	
+	pthread_mutex_unlock(&mtx);
 }
 
 
@@ -28,7 +47,7 @@ int main(int argc, char **argv){
 	}
 	int n1=atoi(argv[1]), n2=atoi(argv[2]); //Número de clientes y de proveedores y tipos de camisetas
 	int vcam[n2];
-	printf("Hay stock de %d camisetas antes de abrir la tienda.\n", n2);
+	printf("Hay stock de %d tipos de camisetas antes de abrir la tienda.\n", n2);
 	for(int i=0;i<n2;i++){
 		vcam[i]=1+(rand() % 100);
 		printf("%d ", vcam[i]);
@@ -40,25 +59,25 @@ int main(int argc, char **argv){
 	d1.num_modelos=n2;
 	
 	for(int i=0;i<n1;i++){ //Creación hilos de clientes
-		if(pthread_create(&(vthcl[i], NULL, ))){
-			fprintf(sderr, "Error al crear el hilo.\n");
+		if(pthread_create(&(vthcl[i], NULL, (void *) compras, (void *) &d1))){
+			fprintf(stderr, "Error al crear el hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
 	for(int i=0;i<n2;i++){ //Creación hilos de proveedores
-		if(pthread_create()){
-			fprintf(sderr, "Error al crear el hilo.\n");
+		if(pthread_create(&(vthpr[i]), NULL, (void *) repuesta, (void *) &d1)){
+			fprintf(stderr, "Error al crear el hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
 	for(int i=0;i<n1;i++){ //Recogida de hilos de clientes
-		if(pthread_join(vthcl[i], )){
+		if(pthread_join(vthcl[i], NULL)){
 			fprintf(stderr, "Error al recoger al hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
 	for(int i=0;i<n2;i++){ //Recogida de hilos de proveedores.
-		if(pthread_join(vthpr[i], )){
+		if(pthread_join(vthpr[i], NULL)){
 			fprintf(stderr, "Error al recoger al hilo.\n");
 			exit(EXIT_FAILURE);
 		}
@@ -71,9 +90,7 @@ int main(int argc, char **argv){
 	}
 	printf("Hay stock de %d camisetas al cerrar la tienda.\n");
 	for(int i=0;i<n2;i++){
-		if(vcam[i]!=0){
-			printf("%d ", v[i]);
-		}
+		printf("%d ", vcam[i]);
 	}
 	exit(EXIT_SUCCESS);
 }
