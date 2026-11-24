@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+//CORREGIR EJERCICIO -> LOS PRINTF DE LOS HILOS SALEN NÚMEROS INCOHERENTES
 pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 
 struct datos_tienda{
@@ -11,18 +11,17 @@ struct datos_tienda{
 };
 
 void *compras(void *arg1){
-	struct datos_tienda *daux=(struct datos_tienda*) arg1;
-	srand(time(NULL));
 	pthread_mutex_lock(&mtx);
+	struct datos_tienda *daux=(struct datos_tienda*) arg1;
 	int ncompras, nelem;
 	ncompras=1+(rand()%10); //Número del 1 al 10 de camisetas a comprar
 	nelem=rand()%(daux->num_modelos); //Número de 0 al tamaño del vector de modelos de camisetas
 	if(ncompras>=daux->stock[nelem]){ //Si compramos más camisetas de las disponibles se pondrá a 0 el contador de ese modelo de camiseta y se mostrarán todas las compradas
-		printf("Soy el cliente %d y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		printf("Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
 		daux->stock[nelem]=0;
 	}
 	else{
-		printf("Soy el cliente %d y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		printf("<-- Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
 		daux->stock[nelem]-=ncompras;
 	}
 	pthread_mutex_unlock(&mtx);
@@ -30,11 +29,15 @@ void *compras(void *arg1){
 }
 
 void *repuesta(void *arg2){
-	struct datos_tienda *daux2=(struct datos_tienda *) arg2;
-	srand(time(NULL));
 	pthread_mutex_lock(&mtx);
-	
+	struct datos_tienda *daux2=(struct datos_tienda *) arg2;
+	int nrepuesta, nelem;
+	nrepuesta=1+(rand()%10); //Número del 1 al 10 para reponer un modelo de camiseta
+	nelem=rand()%(daux2->num_modelos); //Número de 0 al tamaño del vector de modelos de camisetas
+	daux2->stock[nelem]+=nrepuesta;
+	printf("--> Soy el proveedor %lu y he repuesto %d unidades de la camiseta %d.\n", pthread_self(), nrepuesta, nelem);
 	pthread_mutex_unlock(&mtx);
+	pthread_exit(NULL);
 }
 
 
@@ -59,7 +62,7 @@ int main(int argc, char **argv){
 	d1.num_modelos=n2;
 	//Creación hilos de clientes
 	for(int i=0;i<n1;i++){
-		if(pthread_create(&(vthcl[i], NULL, (void *) compras, (void *) &d1))){
+		if(pthread_create(&vthcl[i], NULL, (void *) compras, (void *) &d1)){
 			fprintf(stderr, "Error al crear el hilo.\n");
 			exit(EXIT_FAILURE);
 		}

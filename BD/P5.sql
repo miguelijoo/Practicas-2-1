@@ -88,8 +88,31 @@ begin
     OPEN cur_vot2;
     FETCH cur_vot2 INTO v_dni;
     FOR dniaux IN cur_vot LOOP
-    FETCH cur_vot2 INTO v_dni;
-    IF cur_vot%NOTFOUND THEN dbms_output.put_line(v_dni || 'es el último DNI');
+        FETCH cur_vot2 INTO v_dni;
+        IF cur_vot2%NOTFOUND THEN dbms_output.put_line(v_dni.dni || ' es el más pequeño');
+        ELSE dbms_output.put_line(dniaux.dni || ' va antes que ' || v_dni.dni);
+        END IF;
     END LOOP;
+    CLOSE cur_vot2;
+end;
+/
+--Eje 4
+clear screen;
+set serveroutput on;
+declare --RECORDATORIO: AVG trabaja con un solo valor, es decir, si hago AVG(SELECT COUNT(*) ...) no funcionaría ya que recibe un montón de valores del tirón, el AVG se basa en hacer media de valor en valor, no de recibir todos de una vez.
+    CURSOR cur_vot IS SELECT COUNT(*) AS recuento, dni FROM votantes, consultas WHERE dni=votante GROUP BY dni HAVING COUNT(*)>(SELECT AVG(COUNT(*)) FROM consultas GROUP BY votante) ORDER BY recuento DESC;
+begin
+    FOR v_dni IN cur_vot LOOP
+        dbms_output.put_line(v_dni.dni|| ' ha participado ' || v_dni.recuento ||' veces.');
+    END LOOP;
+end;
+/
+--Eje 5
+clear screen;
+set serveroutput on;
+declare
+
+begin
+
 end;
 /
