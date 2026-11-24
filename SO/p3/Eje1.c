@@ -57,38 +57,43 @@ int main(int argc, char **argv){
 	struct datos_tienda d1; //Estructura que se rellena con los datos del vector de camisetas y su tamaño para que las funciones lo usen. Se usará una sola estructura ya que será de sólo lectura, no se modifican datos de la estructura por tanto no habría problemas de concurrencia con esta estructura.
 	d1.stock=vcam;
 	d1.num_modelos=n2;
-	
-	for(int i=0;i<n1;i++){ //Creación hilos de clientes
+	//Creación hilos de clientes
+	for(int i=0;i<n1;i++){
 		if(pthread_create(&(vthcl[i], NULL, (void *) compras, (void *) &d1))){
 			fprintf(stderr, "Error al crear el hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
-	for(int i=0;i<n2;i++){ //Creación hilos de proveedores
+	//Creación hilos de proveedores	
+	for(int i=0;i<n2;i++){
 		if(pthread_create(&(vthpr[i]), NULL, (void *) repuesta, (void *) &d1)){
 			fprintf(stderr, "Error al crear el hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
-	for(int i=0;i<n1;i++){ //Recogida de hilos de clientes
+	//Recogida de hilos de clientes
+	for(int i=0;i<n1;i++){
 		if(pthread_join(vthcl[i], NULL)){
 			fprintf(stderr, "Error al recoger al hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
-	for(int i=0;i<n2;i++){ //Recogida de hilos de proveedores.
+	//Recogida de hilos de proveedores.
+	for(int i=0;i<n2;i++){
 		if(pthread_join(vthpr[i], NULL)){
 			fprintf(stderr, "Error al recoger al hilo.\n");
 			exit(EXIT_FAILURE);
 		}
 	}
+	//Contador que cuenta el número de camisetas aún en stock.
 	int cont=0;
 	for(int i=0;i<n2;i++){
-		if(vcam[i]==0){
+		if(vcam[i]!=0){
 			cont++;
 		}
 	}
-	printf("Hay stock de %d camisetas al cerrar la tienda.\n");
+	printf("Hay stock de %d camisetas al cerrar la tienda.\n", cont);
+	//Muestra del stock de todas las camisetas sean 0 o distinto de 0.
 	for(int i=0;i<n2;i++){
 		printf("%d ", vcam[i]);
 	}

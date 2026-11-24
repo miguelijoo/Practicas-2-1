@@ -10,8 +10,8 @@ void * leerlineas(void *pfich){
 		exit(EXIT_FAILURE);
 	}
 	*n=0;
-	char cad[300];
-	while(fgets(cad, 300, fich)!=NULL){
+	char cad[1000];
+	while(fgets(cad, 1000, fich)!=NULL){
 		(*n)++;
 	}
 	pthread_exit((void *) n);

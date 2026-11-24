@@ -27,7 +27,7 @@ int main(){
 	}
 	pthread_t v_hebras[n];
 	for(int i=0;i<n;i++){
-		if(pthread_create(&v_hebras[i], NULL, (void *) sumaral, (void *) al)){
+		if(pthread_create(&v_hebras[i], NULL, (void *) sumaral, (void *) al)){ //Se puede usar strerror(error) si hacemos error=pthread_create(...). El valor que de vuelve error es distinto de 0 y strerror lo puede traducir a texto correctamente.
 			fprintf(stderr,"Error creando al hilo.\n");
 			exit(EXIT_FAILURE);
 		}

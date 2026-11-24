@@ -80,3 +80,16 @@ end;
 --Eje 3
 clear screen;
 set serveroutput on;
+declare
+    CURSOR cur_vot IS SELECT dni FROM votantes ORDER BY dni DESC;
+    CURSOR cur_vot2 IS SELECT dni FROM votantes ORDER BY dni DESC;
+    v_dni cur_vot%rowtype;
+begin
+    OPEN cur_vot2;
+    FETCH cur_vot2 INTO v_dni;
+    FOR dniaux IN cur_vot LOOP
+    FETCH cur_vot2 INTO v_dni;
+    IF cur_vot%NOTFOUND THEN dbms_output.put_line(v_dni || 'es el último DNI');
+    END LOOP;
+end;
+/
