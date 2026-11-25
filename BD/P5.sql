@@ -111,8 +111,26 @@ end;
 clear screen;
 set serveroutput on;
 declare
-
+    CURSOR cur_vot IS SELECT dni FROM votantes ORDER BY dni DESC;
+    cad VARCHAR2(23) := 'TRWAGMYFPDXBNJZSQVHLCKE';
+    cad_dni VARCHAR2(8);
+    cont NUMBER := 0;
+    pos NUMBER;
+    nceros NUMBER;
 begin
-
+    FOR v_dni IN cur_vot LOOP
+        pos := MOD(v_dni.dni, 23)+1;
+        cont := cont + 1;
+        cad_dni := TO_CHAR(v_dni.dni); --SIEMPRE PONER EL .columna EN UN REGISTRO, LOS REGISTROS AÚN CON UN SOLO TIPO DE DATO, SON REGISTROS, NO DATOS
+        IF LENGTH(cad_dni)<8 THEN --TO_CHAR convierte a texto el número interno que haya en los paréntesis
+           nceros := 8 - LENGTH(cad_dni);
+           FOR i IN 1..nceros LOOP
+            cad_dni := '0' || cad_dni;
+           END LOOP;
+        END IF;
+        dbms_output.put_line(cad_dni ||'-' || SUBSTR(cad, pos, 1));
+    END LOOP;
+    dbms_output.put_line('Total de DNI procesados: ' || cont);
 end;
 /
+SELECT * FROM votantes;
