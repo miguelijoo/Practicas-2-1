@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-//CORREGIR EJERCICIO -> LOS PRINTF DE LOS HILOS SALEN NÚMEROS INCOHERENTES
+
 pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 
 struct datos_tienda{
@@ -17,11 +17,11 @@ void *compras(void *arg1){
 	ncompras=1+(rand()%10); //Número del 1 al 10 de camisetas a comprar
 	nelem=rand()%(daux->num_modelos); //Número de 0 al tamaño del vector de modelos de camisetas
 	if(ncompras>=daux->stock[nelem]){ //Si compramos más camisetas de las disponibles se pondrá a 0 el contador de ese modelo de camiseta y se mostrarán todas las compradas
-		printf("Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		printf("Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem+1);
 		daux->stock[nelem]=0;
 	}
 	else{
-		printf("<-- Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), daux->stock[nelem], nelem);
+		printf("<-- Soy el cliente %lu y he comprado %d unidades de la camiseta %d.\n", pthread_self(), ncompras, nelem+1);
 		daux->stock[nelem]-=ncompras;
 	}
 	pthread_mutex_unlock(&mtx);
@@ -35,7 +35,7 @@ void *repuesta(void *arg2){
 	nrepuesta=1+(rand()%10); //Número del 1 al 10 para reponer un modelo de camiseta
 	nelem=rand()%(daux2->num_modelos); //Número de 0 al tamaño del vector de modelos de camisetas
 	daux2->stock[nelem]+=nrepuesta;
-	printf("--> Soy el proveedor %lu y he repuesto %d unidades de la camiseta %d.\n", pthread_self(), nrepuesta, nelem);
+	printf("--> Soy el proveedor %lu y he repuesto %d unidades de la camiseta %d.\n", pthread_self(), nrepuesta, nelem+1);
 	pthread_mutex_unlock(&mtx);
 	pthread_exit(NULL);
 }
@@ -55,6 +55,7 @@ int main(int argc, char **argv){
 		vcam[i]=1+(rand() % 100);
 		printf("%d ", vcam[i]);
 	}
+	printf("\n");
 	
 	pthread_t vthcl[n1], vthpr[n2]; //Declaración hilos de clientes y proveedores
 	struct datos_tienda d1; //Estructura que se rellena con los datos del vector de camisetas y su tamaño para que las funciones lo usen. Se usará una sola estructura ya que será de sólo lectura, no se modifican datos de la estructura por tanto no habría problemas de concurrencia con esta estructura.
@@ -100,5 +101,6 @@ int main(int argc, char **argv){
 	for(int i=0;i<n2;i++){
 		printf("%d ", vcam[i]);
 	}
+	printf("\n");
 	exit(EXIT_SUCCESS);
 }
