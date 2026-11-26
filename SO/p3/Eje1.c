@@ -102,5 +102,9 @@ int main(int argc, char **argv){
 		printf("%d ", vcam[i]);
 	}
 	printf("\n");
+	if(pthread_mutex_destroy(&mtx)){
+		fprintf(stderr, "Error al destruir el mutex.\n");
+		exit(EXIT_FAILURE);
+	}
 	exit(EXIT_SUCCESS);
 }
