@@ -1,3 +1,6 @@
 HALT false 0 q0
 LDA true 3 q1
 LDQ true 2 q2
+STA true 3 q3
+STQ true 2 q4
+LDAQ true 3 q5

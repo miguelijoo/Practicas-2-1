@@ -1,13 +1,17 @@
 $
 PC+1->PC:t1
 PC->MAR:t0
-GPR(AD)->MAR:t3·q1 + t3·q2
+GPR(AD)->MAR:t3·q1 + t3·q2 + t3·q3 + t3·q4 + t3·q5 + t4·q5
+GPR->M:t5·q3
+QR->M:t4·q4
 GPR(OP)->OPR:t2
-M->GPR:t4·q1 + t1
-0->ACC:t4·q1
-M->QR:t4·q2
-GPR+ACC->ACC:t5·q1
+M->GPR:t4·q1 + t1 + t4·q5
+ACC->GPR:t4·q3
+GPR+1->GPR:t3·q5
+0->ACC:t4·q1 + t3·q5
+M->QR:t4·q2 + t5·q5
+GPR+ACC->ACC:t5·q1 + t5·q5
 $
-SR+1->SR:t0 + t1 + t2 + t3·q1 + t4·q1 + t3·q2
-LOAD SR:t5·q1-0 + t4·q2-0
+SR+1->SR:t0 + t1 + t2 + t3·q1 + t4·q1 + t3·q2 + t3·q3 + t4·q3 + t3·q4 + t3·q5 + t4·q5 
+LOAD SR:t5·q1-0 + t4·q2-0 + t5·q3-0  + t4·q4-0 + t5·q5-0
 $
